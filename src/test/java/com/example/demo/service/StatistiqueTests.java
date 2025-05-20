@@ -23,7 +23,7 @@ public class StatistiqueTests {
 
         double prixTotalApresRemise = 0.00;
         try {
-            prixTotalApresRemise = statistique.prix();
+            prixTotalApresRemise = statistique.prixMoyen();
             Assertions.assertEquals(171000, prixTotalApresRemise);
         } catch (ArithmeticException e) {
             System.out.println("Erreur : " + e.getMessage());
@@ -48,7 +48,7 @@ public class StatistiqueTests {
 
         double prixTotalApresRemise = 0.00;
         try {
-            prixTotalApresRemise = statistique.prix();
+            prixTotalApresRemise = statistique.prixMoyen();
             Assertions.assertEquals(310000, prixTotalApresRemise);
         } catch (ArithmeticException e) {
             System.out.println("Erreur : " + e.getMessage());
