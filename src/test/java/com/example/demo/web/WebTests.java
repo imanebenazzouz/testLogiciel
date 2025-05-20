@@ -1,8 +1,5 @@
 package com.example.demo.web;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.example.demo.data.Voiture;
 import com.example.demo.service.Echantillon;
 import com.example.demo.service.StatistiqueImpl;
@@ -20,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class WebTests {
+public class WebTests {
 
     @MockBean
     StatistiqueImpl statistiqueImpl;
@@ -36,6 +33,7 @@ class WebTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(voitureJson))
                 .andExpect(status().isOk());
+
         verify(statistiqueImpl).ajouter(any(Voiture.class));
     }
 
@@ -56,10 +54,4 @@ class WebTests {
         mockMvc.perform(get("/statistique"))
                 .andExpect(status().isNotFound());
     }
-
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public class PasDeVoitureException extends RuntimeException {
-    }
-
 }
