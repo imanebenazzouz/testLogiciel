@@ -1,5 +1,8 @@
 package com.example.demo.web;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import com.example.demo.data.Voiture;
 import com.example.demo.service.Echantillon;
 import com.example.demo.service.StatistiqueImpl;
@@ -53,4 +56,10 @@ class WebTests {
         mockMvc.perform(get("/statistique"))
                 .andExpect(status().isNotFound());
     }
+
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public class PasDeVoitureException extends RuntimeException {
+    }
+
 }
