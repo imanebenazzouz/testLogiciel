@@ -2,56 +2,41 @@ package com.example.demo.service;
 
 import com.example.demo.data.Voiture;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StatistiqueTests {
 
     @Test
-    public void  getTotalPriceAfterSale(){
+    public void testAjoutEtPrixMoyenSimple() {
         Statistique statistique = new StatistiqueImpl();
 
-        statistique.ajouter(new Voiture("Fiat", 30000));
-        statistique.ajouter(new Voiture("Mercedes CDI 220", 30000));
-        statistique.ajouter(new Voiture("Renault 307 HDI", 30000));
-        statistique.ajouter(new Voiture("Renault Megane 1", 30000));
-        statistique.ajouter(new Voiture("Renault Clio 1", 30000));
-        statistique.ajouter(new Voiture("Renault Clio 2", 30000));
+        statistique.ajouter(new Voiture("Toyota", 10000));
+        statistique.ajouter(new Voiture("Renault", 20000));
+        statistique.ajouter(new Voiture("Peugeot", 30000));
 
-        double prixTotalApresRemise = 0.00;
-        try {
-            prixTotalApresRemise = statistique.prixMoyen();
-            Assertions.assertEquals(171000, prixTotalApresRemise);
-        } catch (ArithmeticException e) {
-            System.out.println("Erreur : " + e.getMessage());
-        }
+        Echantillon resultat = statistique.prixMoyen();
+
+        assertEquals(3, resultat.getNombreDeVoitures());
+        assertEquals(20000, resultat.getPrixMoyen()); 
     }
 
     @Test
-    public void  getTotalPriceAfterSaleOverLimit(){
+    public void testPrixMoyenAvecUneSeuleVoiture() {
+        Statistique statistique = new StatistiqueImpl();
+        statistique.ajouter(new Voiture("Fiat", 15000));
+
+        Echantillon resultat = statistique.prixMoyen();
+
+        assertEquals(1, resultat.getNombreDeVoitures());
+        assertEquals(15000, resultat.getPrixMoyen());
+    }
+
+    @Test
+    public void testPrixMoyenVide() {
         Statistique statistique = new StatistiqueImpl();
 
-        statistique.ajouter(new Voiture("Fiat", 30000));
-        statistique.ajouter(new Voiture("Mercedes CDI 220", 30000));
-        statistique.ajouter(new Voiture("Renault 307 HDI", 30000));
-        statistique.ajouter(new Voiture("Renault Megane 1", 30000));
-        statistique.ajouter(new Voiture("Renault Clio 1", 30000));
-        statistique.ajouter(new Voiture("Renault Clio 2", 30000));
-        statistique.ajouter(new Voiture("Alph Romeo", 30000));
-        statistique.ajouter(new Voiture("Renault Megane 2", 30000));
-        statistique.ajouter(new Voiture("Citroen Picasso", 30000));
-        statistique.ajouter(new Voiture("BMW Turbo", 30000));
-        statistique.ajouter(new Voiture("Ferrari Sport", 30000));
-
-        int prixTotalApresRemise = 0;
-        try {
-            prixTotalApresRemise = statistique.prixMoyen();
-            Assertions.assertEquals(310000, prixTotalApresRemise);
-        } catch (ArithmeticException e) {
-            System.out.println("Erreur : " + e.getMessage());
-        }
+        assertThrows(ArithmeticException.class, () -> {
+            statistique.prixMoyen();
+        });
     }
 }
