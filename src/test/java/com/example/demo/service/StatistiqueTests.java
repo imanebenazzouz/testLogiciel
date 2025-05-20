@@ -46,7 +46,7 @@ public class StatistiqueTests {
         statistique.ajouter(new Voiture("BMW Turbo", 30000));
         statistique.ajouter(new Voiture("Ferrari Sport", 30000));
 
-        double prixTotalApresRemise = 0.00;
+        int prixTotalApresRemise = 0;
         try {
             prixTotalApresRemise = statistique.prixMoyen();
             Assertions.assertEquals(310000, prixTotalApresRemise);
