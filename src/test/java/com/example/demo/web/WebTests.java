@@ -52,6 +52,6 @@ public class WebTests {
         when(statistiqueImpl.prixMoyen()).thenThrow(new ArithmeticException());
 
         mockMvc.perform(get("/statistique"))
-                .andExpect(status().isNotFound());
-    }
+.andExpect(status().isBadRequest()); 
+  }
 }
